@@ -1,0 +1,7 @@
+node_modules/
+bin/
+.cursor-efficiency.tokens.log
+.cursor-efficiency.json
+.DS_Store
+*.sqlite
+*.vscdb

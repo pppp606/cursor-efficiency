@@ -1,0 +1,24 @@
+{
+  "name": "cursor-efficiency",
+  "version": "0.1.0",
+  "description": "CLI tool to report token usage, chat count, lines changed, and adoption rate.",
+  "bin": {
+    "cursor-efficiency": "./bin/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./bin/index.js start",
+    "end": "node ./bin/index.js end"
+  },
+  "dependencies": {
+    "commander": "^10.0.0",
+    "sqlite": "^5.0.0",
+    "sqlite3": "^5.0.0",
+    "string-similarity": "^4.0.4",
+    "tiktoken": "^1.0.21"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
