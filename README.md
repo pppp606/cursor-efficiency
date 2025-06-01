@@ -4,12 +4,35 @@ A CLI tool to report token usage, chat count, lines changed, and adoption rate f
 
 ## Installation
 
+### Global Installation
+
 ```bash
 # Install the package globally
 npm install -g cursor-efficiency
 
-# Or install locally in your project
+# Make the package executable (if needed)
+npm link cursor-efficiency
+```
+
+### Local Installation
+
+```bash
+# Install locally in your project
 npm install cursor-efficiency
+
+# Add to your package.json scripts
+{
+  "scripts": {
+    "cursor-efficiency": "cursor-efficiency"
+  }
+}
+```
+
+Then you can run it using:
+```bash
+npm run cursor-efficiency start
+# or
+npm run cursor-efficiency end
 ```
 
 ## Usage
@@ -29,12 +52,11 @@ This command begins the measurement process. It will:
 ### End Measurement
 
 ```bash
-cursor-efficiency end [branch]
+cursor-efficiency end
 ```
 
 This command ends the measurement and outputs a report. It supports the following options:
 
-- `[branch]`: Optional branch name to verify against the starting branch
 - `-c, --include-chat-entries`: Include detailed chat entries in the output
 
 ## Output Format
@@ -43,26 +65,44 @@ The tool outputs a JSON object with the following fields:
 
 ```json
 {
-  "branch": "string",          // Git branch name
-  "startTime": "string",       // ISO timestamp of measurement start
-  "endTime": "string",         // ISO timestamp of measurement end
-  "promptTokensUsed": number,  // Total number of tokens used in chats
-  "requestUsageCount": number, // Total number of Usage Premium models  
-  "chatCount": number,         // Total number of chat interactions
-  "linesChanged": number,      // Total number of lines changed in git
-  "chatEntries": array         // Optional: Detailed chat entries (if -c flag is used)
+  "branch": "string",
+  "startTime": "string (ISO format)",
+  "endTime": "string (ISO format)",
+  "usedTokens": {
+    "input": "number",
+    "output": "number"
+  },
+  "usageRequestAmount": "number",
+  "chatCount": {
+    "input": "number",
+    "output": "number"
+  },
+  "linesChanged": "number",
+  "codeChangeCount": "number",
+  "adoptionRate": "number",
+  "chatEntries": "array (optional)"
 }
 ```
+
+### Field Descriptions
+
+- `branch`: The name of the current Git branch during measurement
+- `startTime`: The timestamp when measurement started (ISO format)
+- `endTime`: The timestamp when measurement ended (ISO format)
+- `usedTokens`: Token usage statistics
+  - `input`: Number of tokens used in user inputs
+  - `output`: Number of tokens used in AI responses
+- `usageRequestAmount`: The calculated cost of API usage
+- `chatCount`: Number of chat interactions
+  - `input`: Number of user messages
+  - `output`: Number of AI responses
+- `linesChanged`: Total number of lines modified in the codebase
+- `codeChangeCount`: Number of code changes made
+- `adoptionRate`: Percentage of suggested changes that were adopted
+- `chatEntries`: Detailed chat history (only included when using `--include-chat-entries` option)
 
 ## Important Notes
 
 1. The tool requires a git repository to be initialized in your project directory
 2. Make sure you have the necessary permissions to access Cursor's workspace storage
 3. The token count calculation is based on GPT-4's tokenizer and may differ from actual usage depending on the model selected by Cursor
-4. The configuration file (`.cursor-efficiency.json`) is created in your project directory and should be added to `.gitignore`
-
-## Supported Platforms
-
-- macOS
-- Windows
-- Linux

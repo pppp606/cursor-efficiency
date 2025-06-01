@@ -11,9 +11,12 @@ program.command('start')
   .description('Begin measurement')
   .action(startCmd.start);
 
-program.command('end [branch]')
+program.command('end')
   .description('End measurement and output report')
   .option('-c, --include-chat-entries', 'Include chat entries in the output')
-  .action((branch, options) => endCmd.end(branch, options.includeChatEntries));
+  .action(async (options) => {
+    const output = await endCmd.end(options.includeChatEntries)
+    console.log(JSON.stringify(output, null, 2))
+  });
 
 program.parse(process.argv);

@@ -8,15 +8,22 @@ interface OutputData {
   branch: string;
   startTime: string;
   endTime: string;
-  promptTokensUsed: number;
-  requestUsageCount: number;
-  chatCount: number;
+  usedTokens: {
+    input: number;
+    output: number;
+  };
+  usageRequestAmount: number;
+  chatCount: {
+    input: number;
+    output: number;
+  };
   linesChanged: number;
-  adoptionRate?: number;
+  codeChangeCount: number;
+  adoptionRate: number;
   chatEntries?: any[];
 }
 
-export async function end(branchName?: string, includeChatEntries?: boolean): Promise<OutputData> {
+export async function end(includeChatEntries?: boolean): Promise<OutputData> {
   const installDir = path.dirname(path.dirname(path.dirname(__filename)));
   const currentDirName = path.basename(process.cwd());
   const cfgPath = path.join(installDir, currentDirName, '.cursor-efficiency.json');
@@ -26,40 +33,33 @@ export async function end(branchName?: string, includeChatEntries?: boolean): Pr
     process.exit(1);
   }
   const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf-8'));
-  const { branch, startSha, startTime, requestUsageCount } = cfg;
-  if (branchName && branchName !== branch) {
-    console.warn(
-      `Branch mismatch: started on ${branch}, now on ${branchName}`
-    );
-  }
+  const { branch, startSha, startTime } = cfg;
 
   const endSha = getSha();
   const endTime = new Date().toISOString();
 
   // metrics
-  const chatLogs = await getChatLogs(
-    process.cwd(),
-    new Date(startTime),
-    new Date(endTime)
-  );
-  const linesChanged = countLines(startSha, endSha);
+  const chatLogs = await getChatLogs({
+    workspaceDir: process.cwd(),
+    start: new Date(startTime),
+    end: new Date(endTime)
+  })
 
   // output
   const output: OutputData = {
     branch,
     startTime,
     endTime,
-    promptTokensUsed: chatLogs.tokens,
-    requestUsageCount,
-    chatCount: chatLogs.total,
-    linesChanged,
+    usedTokens: chatLogs.tokens,
+    usageRequestAmount: chatLogs.usageAmount,
+    chatCount: chatLogs.chatCount,
+    linesChanged: countLines(startSha, endSha),
+    codeChangeCount: chatLogs.codeChangeCount,
+    adoptionRate: chatLogs.adoptionRate,
   };
 
   if (includeChatEntries) {
     output.chatEntries = chatLogs.entries;
   }
-
-  console.log(JSON.stringify(output, null, 2));
-
   return output;
 }

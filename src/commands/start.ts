@@ -1,13 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import { getCurrentBranch, getSha } from '../utils/git';
-import { getRequestUsageCount } from '../utils/requestUsage';
 
 export async function start() {
   const branch = getCurrentBranch();
   const startSha = getSha();
   const startTime = new Date().toISOString();
-  const requestUsageCount = await getRequestUsageCount();
 
   const installDir = path.dirname(path.dirname(path.dirname(__filename)));
   const currentDirName = path.basename(process.cwd());
@@ -22,10 +20,8 @@ export async function start() {
     JSON.stringify({
        branch,
        startSha,
-       startTime,
-       requestUsageCount 
+       startTime
     }, null, 2)
   );
   console.log(`Started on ${branch} @ ${startSha} (${startTime})`);
-  console.log(`Configuration saved in: ${configDir}`);
 }
