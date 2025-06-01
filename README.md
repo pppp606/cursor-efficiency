@@ -78,7 +78,7 @@ The tool outputs a JSON object with the following fields:
     "output": "number"
   },
   "linesChanged": "number",
-  "codeChangeCount": "number",
+  "proposedCodeCount": "number",
   "adoptionRate": "number",
   "chatEntries": "array (optional)"
 }
@@ -96,10 +96,31 @@ The tool outputs a JSON object with the following fields:
 - `chatCount`: Number of chat interactions
   - `input`: Number of user messages
   - `output`: Number of AI responses
-- `linesChanged`: Total number of lines modified in the codebase
-- `codeChangeCount`: Number of code changes made
-- `adoptionRate`: Percentage of suggested changes that were adopted
+- `linesChanged`: Total number of lines changed in git commits between start and end time. This counts the actual committed changes, not just proposed changes.
+- `proposedCodeCount`: Number of code suggestions made by Cursor's AI
+- `adoptionRate`: Percentage of AI-suggested changes that were adopted
 - `chatEntries`: Detailed chat history (only included when using `--include-chat-entries` option)
+
+## Usage Scenario
+
+The tool is designed to measure your coding efficiency with Cursor IDE. Here's a typical workflow:
+
+1. Start measurement before beginning your coding session:
+   ```bash
+   cursor-efficiency start
+   ```
+
+2. Work on your code using Cursor IDE, making commits as you go
+
+3. End measurement after completing your work and making final commits:
+   ```bash
+   cursor-efficiency end
+   ```
+
+This will give you insights into:
+- How much code you've actually committed
+- Your interaction with Cursor's AI
+- The efficiency of your coding process
 
 ## Important Notes
 

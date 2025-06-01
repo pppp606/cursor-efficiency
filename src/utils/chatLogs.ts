@@ -33,7 +33,7 @@ type ChatLogResult = {
     output: number,
   },
   usageAmount: number,
-  codeChangeCount: number,
+  proposedCodeCount: number,
   adoptionRate: number,
 }
 
@@ -82,7 +82,7 @@ const defaultChatLogResult: ChatLogResult = {
     output: 0,
   },
   usageAmount: 0,
-  codeChangeCount: 0,
+  proposedCodeCount: 0,
   adoptionRate: 0,
 }
 
@@ -131,7 +131,7 @@ export async function getChatLogs(
     output: bubblesJson.filter((bubble: any) => bubble.type === 2).length,
   }
 
-  const codeChangeCount = bubblesJson.reduce((acc: number, bubble: any) => {
+  const proposedCodeCount = bubblesJson.reduce((acc: number, bubble: any) => {
     return acc + bubble.diffsSinceLastApply.length
   }, 0)
 
@@ -139,7 +139,7 @@ export async function getChatLogs(
     return acc + bubble.diffsSinceLastApply.filter((diff: any) => diff.isAccepted).length
   }, 0)
 
-  const adoptionRate = codeChangeCount > 0 ? codeChangeAccepted / codeChangeCount : 0
+  const adoptionRate = proposedCodeCount > 0 ? codeChangeAccepted / proposedCodeCount : 0
   
   const entries = bubblesJson.map((bubble: any) => {
     return {
@@ -168,7 +168,7 @@ export async function getChatLogs(
     entries: sortedEntries,
     tokens,
     usageAmount,
-    codeChangeCount,
+    proposedCodeCount,
     adoptionRate
   }
 }

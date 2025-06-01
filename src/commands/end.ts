@@ -18,7 +18,7 @@ interface OutputData {
     output: number;
   };
   linesChanged: number;
-  codeChangeCount: number;
+  proposedCodeCount: number;
   adoptionRate: number;
   chatEntries?: any[];
 }
@@ -54,7 +54,7 @@ export async function end(includeChatEntries?: boolean): Promise<OutputData> {
     usageRequestAmount: chatLogs.usageAmount,
     chatCount: chatLogs.chatCount,
     linesChanged: countLines(startSha, endSha),
-    codeChangeCount: chatLogs.codeChangeCount,
+    proposedCodeCount: chatLogs.proposedCodeCount,
     adoptionRate: chatLogs.adoptionRate,
   };
 
