@@ -2,20 +2,7 @@ import path from 'path'
 import os from 'os'
 import { open } from 'sqlite'
 import sqlite3 from 'sqlite3'
-
-// Detect OS-specific Cursor storage base path
-const getCursorGlobalStorageDir = () => {
-  const home = os.homedir()
-  switch (process.platform) {
-    case 'darwin': // macOS
-      return path.join(home, 'Library', 'Application Support', 'Cursor', 'User', 'globalStorage')
-    case 'win32': // Windows
-      return path.join(process.env.APPDATA || '', 'Cursor', 'User', 'globalStorage')
-    case 'linux': // Linux
-    default:
-      return path.join(home, '.config', 'Cursor', 'User', 'globalStorage')
-  }
-}
+import { getCursorGlobalStorageDir } from './cursorWorkspace'
 
 const getCursorAuthRefreshToken = async () => {
   const storageDir = getCursorGlobalStorageDir()
