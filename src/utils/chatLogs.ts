@@ -131,7 +131,6 @@ export async function getChatLogs(
   })
   const sortedEntries = composerDataJsons.map((composerData: any) => {
     return composerData.fullConversationHeadersOnly.map((header: any) => {
-      // entriesからbubbleIdが一致するものを取得
       const entry = entries.find((entry: any) => entry.bubbleId === header.bubbleId)
       if (!entry) return null
       return {
