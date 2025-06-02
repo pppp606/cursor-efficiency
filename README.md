@@ -126,4 +126,3 @@ This will give you insights into:
 
 1. The tool requires a git repository to be initialized in your project directory
 2. Make sure you have the necessary permissions to access Cursor's workspace storage
-3. The token count calculation is based on GPT-4's tokenizer and may differ from actual usage depending on the model selected by Cursor

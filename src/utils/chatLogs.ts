@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 import { open } from 'sqlite'
 import sqlite3 from 'sqlite3'
-import { encoding_for_model } from 'tiktoken'
 import { 
   getCursorWorkspaceStorageDir,
   getCursorGlobalStorageDir,
@@ -35,16 +34,6 @@ type ChatLogResult = {
   usageAmount: number,
   proposedCodeCount: number,
   adoptionRate: number,
-}
-
-/**
- * Calculate tokens for a given text using tiktoken
- */
-function calculateTokens(text: string): number {
-  if (!text) return 0
-  // NOTE: The actual token count may differ from this calculation depending on the model selected by Cursor
-  const encoder = encoding_for_model('gpt-4')
-  return encoder.encode(text).length
 }
 
 const getComposerIds = async (params: getChatLogParams) =>{

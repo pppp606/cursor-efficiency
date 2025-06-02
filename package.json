@@ -14,8 +14,7 @@
     "commander": "^10.0.0",
     "sqlite": "^5.0.0",
     "sqlite3": "^5.0.0",
-    "string-similarity": "^4.0.4",
-    "tiktoken": "^1.0.21"
+    "string-similarity": "^4.0.4"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
