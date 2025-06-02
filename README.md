@@ -4,28 +4,14 @@ A CLI tool to report token usage, chat count, lines changed, and adoption rate f
 
 ## Installation
 
-### Global Installation
-
 ```bash
-# Install the package globally
-npm install -g cursor-efficiency
+# Clone the repository
+git clone https://github.com/pppp606/cursor-efficiency.git
+cd cursor-efficiency
 
-# Make the package executable (if needed)
-npm link cursor-efficiency
-```
-
-### Local Installation
-
-```bash
-# Install locally in your project
-npm install cursor-efficiency
-
-# Add to your package.json scripts
-{
-  "scripts": {
-    "cursor-efficiency": "cursor-efficiency"
-  }
-}
+npm install
+npm run build
+npm install -g .
 ```
 
 Then you can run it using:
@@ -138,7 +124,7 @@ Below are two examples of how to utilize the generated logs.
 Use the JSON-formatted log output from Cursor-efficiency as-is and feed it to an LLM to receive feedback on your coding process and AI interactions. Prepare a prompt like the following:
 
 ```text
-You are an AI coach whose role is to analyze “Cursor-efficiency” agent interaction logs and propose improvements for future sessions.
+You are an AI coach whose role is to analyze "Cursor-efficiency" agent interaction logs and propose improvements for future sessions.
 **Goals:**
 
 * Increase adoptionRate (the rate at which suggested code is accepted)
@@ -173,7 +159,7 @@ You are an AI coach whose role is to analyze “Cursor-efficiency” agent inter
 Have every team member use Cursor-efficiency, and automatically collect logs at git push time to a central server or shared storage. This allows you to understand team-wide trends. One example workflow is as follows:
 
 #### 1. Add a Hook in the Local Repository
-Place a script like the following in your project’s `.git/hooks/pre-push` (or in your CI pipeline):
+Place a script like the following in your project's `.git/hooks/pre-push` (or in your CI pipeline):
 
 ```bash
 #!/bin/bash
@@ -201,18 +187,18 @@ if [ $? -ne 0 ]; then
 fi
 
 exit 0
-````
+```
 
 #### 2. Aggregate and Analyze Logs on the Server
 
-- Import each member’s log file (e.g., cursor_log_feature-add-new-api_ab12cd.json) into a centralized database (e.g., BigQuery, Elasticsearch).
+- Import each member's log file (e.g., cursor_log_feature-add-new-api_ab12cd.json) into a centralized database (e.g., BigQuery, Elasticsearch).
 - Create dashboards to visualize metrics such as:
   - Average token usage, average chat count, average adoption rate
   - Trends by model or by project
   - Time-series analysis (e.g., monthly adoption rate changes)
-- This makes it easy to share insights like “Project X achieved a 60% adoption rate” or “Model Y yielded high efficiency,” helping the entire team learn best practices.
+- This makes it easy to share insights like "Project X achieved a 60% adoption rate" or "Model Y yielded high efficiency," helping the entire team learn best practices.
 
 #### 3. **Establish a Regular Feedback Loop**
 
-- Based on the analysis, share reports in internal chat or meetings, such as “Adoption rate improved from 50% to 65% last month” or “Model Z had the best token-to-output efficiency.”
+- Based on the analysis, share reports in internal chat or meetings, such as "Adoption rate improved from 50% to 65% last month" or "Model Z had the best token-to-output efficiency."
 - Team members can review these logs and reflect on their own prompt design and AI interaction patterns, continuously improving overall development efficiency.
