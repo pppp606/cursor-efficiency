@@ -131,16 +131,7 @@ export async function getChatLogs(
     output: bubblesJson.filter((bubble: any) => bubble.type === 2).length,
   }
 
-  const proposedCodeCount = bubblesJson.reduce((acc: number, bubble: any) => {
-    return acc + bubble.diffsSinceLastApply.length
-  }, 0)
-
-  const codeChangeAccepted = bubblesJson.reduce((acc: number, bubble: any) => {
-    return acc + bubble.diffsSinceLastApply.filter((diff: any) => diff.isAccepted).length
-  }, 0)
-
-  const adoptionRate = proposedCodeCount > 0 ? codeChangeAccepted / proposedCodeCount : 0
-  
+  // Chat entry
   const entries = bubblesJson.map((bubble: any) => {
     return {
       bubbleId: bubble.bubbleId,
@@ -149,7 +140,6 @@ export async function getChatLogs(
       code: bubble.codeBlocks?.map((codeBlock: any) => codeBlock.content) || []
     }
   })
-
   const sortedEntries = composerDataJsons.map((composerData: any) => {
     return composerData.fullConversationHeadersOnly.map((header: any) => {
       // entriesからbubbleIdが一致するものを取得
@@ -162,6 +152,14 @@ export async function getChatLogs(
       }
     })
   })
+
+  // Code block
+  const codeBlockData = composerDataJsons.flatMap((composerData: any) =>
+    Object.values(composerData.codeBlockData).flat()
+  );
+  const proposedCodeCount = codeBlockData.length
+  const codeChangeAccepted = codeBlockData.filter((codeBlock: any) => codeBlock.status === 'accepted').length
+  const adoptionRate = proposedCodeCount > 0 ? codeChangeAccepted / proposedCodeCount : 0
 
   return { 
     chatCount,
