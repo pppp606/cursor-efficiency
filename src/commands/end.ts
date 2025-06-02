@@ -1,11 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { getSha, countLines } from '../utils/git';
+import { getSha, countLines, getGitCommit, getDiff } from '../utils/git';
 import { getChatLogs } from '../utils/chatLogs';
 
-// TODO: implement adoption logic later
 interface OutputData {
-  branch: string;
   startTime: string;
   endTime: string;
   usedTokens: {
@@ -17,7 +15,12 @@ interface OutputData {
     input: number;
     output: number;
   };
-  linesChanged: number;
+  git: {
+    branch: string;
+    linesChanged: number;
+    commit: string[];
+    diff?: string;
+  };
   proposedCodeCount: number;
   adoptionRate: number;
   chatEntries?: any[];
@@ -46,20 +49,24 @@ export async function end(includeChatEntries?: boolean): Promise<OutputData> {
   })
 
   // output
-  const output: OutputData = {
-    branch,
+  const output: OutputData = {    
     startTime,
     endTime,
     usedTokens: chatLogs.tokens,
     usageRequestAmount: chatLogs.usageAmount,
     chatCount: chatLogs.chatCount,
-    linesChanged: countLines(startSha, endSha),
+    git:{
+      branch,
+      linesChanged: countLines(startSha, endSha),
+      commit: getGitCommit(startSha, endSha),
+    },
     proposedCodeCount: chatLogs.proposedCodeCount,
     adoptionRate: chatLogs.adoptionRate,
   };
 
   if (includeChatEntries) {
-    output.chatEntries = chatLogs.entries;
+    output.chatEntries = chatLogs.entries
+    output.git.diff = getDiff(startSha, endSha).patches
   }
   return output;
 }

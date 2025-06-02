@@ -124,7 +124,7 @@ export async function getChatLogs(
   const entries = bubblesJson.map((bubble: any) => {
     return {
       bubbleId: bubble.bubbleId,
-      type: bubble.type,
+      type: bubble.type === 1 ? 'user' : 'assistant',
       text: bubble.text,
       code: bubble.codeBlocks?.map((codeBlock: any) => codeBlock.content) || []
     }

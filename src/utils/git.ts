@@ -29,10 +29,10 @@ export function getDiff(
   return { stat, patches };
 }
 
-export function countLines(
+export const countLines = (
   startSha: string,
   endSha: string
-): number {
+): number => {
   const out = execSync(
     `git diff --numstat ${startSha}..${endSha}`,
     { cwd: process.cwd(), encoding: 'utf-8' }
@@ -45,4 +45,16 @@ export function countLines(
       return add + del;
     })
     .reduce((sum, n) => sum + n, 0);
+}
+
+export const getGitCommit = (
+  startSha: string,
+  endSha: string
+) => {
+  const commit = execSync(
+    `git log --pretty=format:"%H" ${startSha}..${endSha}`,
+    { cwd: process.cwd(), encoding: 'utf-8' }
+  ).trim();
+  
+  return commit.split('\n')
 }
