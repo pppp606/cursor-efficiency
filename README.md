@@ -124,7 +124,8 @@ Below are two examples of how to utilize the generated logs.
 Use the JSON-formatted log output from Cursor-efficiency as-is and feed it to an LLM to receive feedback on your coding process and AI interactions. Prepare a prompt like the following:
 
 ```text
-You are an AI coach whose role is to analyze "Cursor-efficiency" agent interaction logs and propose improvements for future sessions.
+You are an AI coach whose role is to analyze agent interaction logs and propose improvements for future sessions.
+
 **Goals:**
 
 * Increase adoptionRate (the rate at which suggested code is accepted)
