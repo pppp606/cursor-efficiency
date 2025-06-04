@@ -124,24 +124,12 @@ Below are two examples of how to utilize the generated logs.
 Use the JSON-formatted log output from Cursor-efficiency as-is and feed it to an LLM to receive feedback on your coding process and AI interactions. Prepare a prompt like the following:
 
 ```text
-You are an AI coach whose role is to analyze agent interaction logs and propose improvements for future sessions.
+Review the log of interactions with the coding AI and propose improvement points for the user.
 
-**Goals:**
-
-* Increase adoptionRate (the rate at which suggested code is accepted)
-* Reduce chatCount (the number of back-and-forth messages)
-* Reduce usageRequestAmount (the number of AI requests per session)
-
-**Tasks:**
-
-1. Based on the indicators in the logs (token usage, adoptionRate, chat counts, diff line counts, etc.), identify areas where inefficiency or room for improvement exists.
-2. Provide concrete advice on how to interact more effectively with the agent (e.g., prompt structure, response format) to achieve those goals.
-3. List the top-priority points to address in the next session, in bullet form.
-
-**Constraints:**
-
-* All observations must be grounded in quantitative evidence; avoid vague statements.
-* Advice should be specific and actionable, including concrete ways to reduce back-and-forth messages and token consumption.
+## Goals
+- Increase adoptionRate (the rate at which proposed code is accepted)
+- Reduce chatCount (the number of back-and-forth messages)
+- Reduce usageRequestAmount (the number of AI requests per session)
 
 ### Logs
 {
