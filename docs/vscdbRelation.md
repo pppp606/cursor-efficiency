@@ -49,7 +49,6 @@ From the base path, two key subdirectories are used:
       "composerId": "abc123",
       "lastUpdatedAt": "2025-06-01T00:00:00.000Z"
     },
-    ...
   ]
 }
 ````
@@ -78,11 +77,11 @@ This is a simplified excerpt of the full `composerData:{composerId}` JSON struct
   "fullConversationHeadersOnly": [
     {
       "bubbleId": "d1cb0b8d-cc82-43da-af6d-6ba6c8cc741f",
-      "type": 1 // user input
+      "type": 1
     },
     {
       "bubbleId": "bdce7a48-0d30-4fb3-8c9a-fb5ca602bca8",
-      "type": 2, // assistant response
+      "type": 2,
       "serverBubbleId": "377cb721-d158-4e2c-bc9b-cadcff902500"
     },
     {
