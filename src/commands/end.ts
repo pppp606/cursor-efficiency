@@ -29,7 +29,7 @@ interface OutputData {
 export async function end(includeChatEntries?: boolean): Promise<OutputData> {
   const installDir = path.dirname(path.dirname(path.dirname(__filename)));
   const currentDirName = path.basename(process.cwd());
-  const cfgPath = path.join(installDir, currentDirName, '.cursor-efficiency.json');
+  const cfgPath = path.join(installDir, '.log', currentDirName, '.cursor-efficiency.json');
   
   if (!fs.existsSync(cfgPath)) {
     console.error('No .cursor-efficiency.json found. Run `cursor-efficiency start` first.');

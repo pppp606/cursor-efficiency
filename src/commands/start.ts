@@ -9,7 +9,7 @@ export async function start() {
 
   const installDir = path.dirname(path.dirname(path.dirname(__filename)));
   const currentDirName = path.basename(process.cwd());
-  const configDir = path.join(installDir, currentDirName);
+  const configDir = path.join(installDir, '.log', currentDirName);
   if (!fs.existsSync(configDir)) {
     fs.mkdirSync(configDir, { recursive: true });
   }
