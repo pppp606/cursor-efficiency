@@ -16,9 +16,9 @@ npm install -g .
 
 Then you can run it using:
 ```bash
-npm run cursor-efficiency start
+cursor-efficiency start
 # or
-npm run cursor-efficiency end
+cursor-efficiency end
 ```
 
 ## Usage
